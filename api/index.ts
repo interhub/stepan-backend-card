@@ -1,13 +1,20 @@
 import 'reflect-metadata';
 
-import { LogLevel } from '@nestjs/common';
+import { LogLevel, Type } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { ExpressAdapter } from '@nestjs/platform-express';
 import express, { Request, Response } from 'express';
 
-import { AppModule } from '../dist/app.module';
-
 const LAMBDA_LOG_LEVELS: LogLevel[] = ['error', 'warn'];
+
+/**
+ * The lambda runs the compiled application, and `dist` exists only after a
+ * build. A static import would therefore make `npm run typecheck` fail on a
+ * freshly cloned repository, so the built module is loaded through `require`
+ * and given its type here. The path stays a literal, which is what the Vercel
+ * file tracer follows when it bundles the function.
+ */
+const { AppModule } = require('../dist/app.module') as { AppModule: Type };
 
 /**
  * Vercel entry point. The Express instance and the initialised Nest

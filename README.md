@@ -5,7 +5,7 @@ skills, work experience, projects and links.
 
 **Stack:** TypeScript, Node.js, NestJS, Prisma, GraphQL (Apollo, code-first), SQLite, Docker.
 
-**Live Apollo Sandbox:** `LIVE_URL`
+**Live Apollo Sandbox:** https://stepan-backend-card.vercel.app
 
 ---
 
@@ -13,8 +13,9 @@ skills, work experience, projects and links.
 
 ```bash
 npm install
-npm run db:prepare   # generate client, create the SQLite file, build, seed
-npm start            # http://localhost:3000
+cp .env.example .env   # only the Prisma CLI reads it, the application has defaults
+npm run db:prepare     # generate client, create the SQLite file, build, seed
+npm start              # http://localhost:3000
 ```
 
 `db:prepare` is idempotent, so it is safe to run it again at any time.
@@ -66,7 +67,9 @@ GraphQL request
   PrismaService global module, connects on module init, closes on shutdown
 ```
 
-One module per entity, each with the same three files plus a request scoped DataLoader:
+One folder per entity. Every one of them has a module, a repository and a service; a resolver
+is added where the entity answers a query or a nested field, and a request scoped DataLoader
+where it is loaded as a relation of another type:
 
 ```
 src/
@@ -109,16 +112,20 @@ A lambda cannot run the Prisma CLI and cannot write anywhere except `/tmp`, so:
 
 1. `npm run db:prepare` builds and seeds `prisma/card.db`, and that file is committed to git.
 2. On a cold start the app copies `prisma/card.db` to `/tmp/card.db` and Prisma opens the copy.
-3. `binaryTargets = ["native", "rhel-openssl-3.0.x"]` ships the query engine the Vercel runtime needs.
-4. `vercel.json` rewrites every path to `api/index` and bundles `dist`, `prisma` and the Prisma client.
+3. `binaryTargets = ["native", "linux-arm64-openssl-3.0.x", "rhel-openssl-3.0.x"]` ships the query
+   engine for the local machine and for both CPU architectures of the Vercel runtime.
+4. `vercel.json` rewrites every path to `api/index` and bundles `dist`, `prisma`, `data` and the
+   Prisma client.
 
 Because the database lives in `/tmp`, writes are per-instance and disappear with the instance.
 That is fine here: the card is read-only.
 
 ## Configuration
 
-Every variable is optional. A missing value and an empty value both fall back to the default
-below, so a fresh clone starts with no `.env` file and no environment variable set at all.
+Every variable is optional for the application. A missing value and an empty value both fall
+back to the default below, so the API starts on a fresh clone with no `.env` file and no
+environment variable set at all. The Prisma CLI is the one exception: `prisma db push` inside
+`npm run db:prepare` reads `DATABASE_URL` from `.env`, which is what copying `.env.example` is for.
 A value that is present but wrong (`DATABASE_URL` pointing at Postgres, a non numeric `PORT`)
 still stops the application with an explicit message.
 
@@ -129,4 +136,5 @@ still stops the application with an explicit message.
 | `GRAPHQL_PATH` | `/` | GraphQL endpoint and Sandbox path |
 | `PROFILE_SLUG` | `stepan-turchenko` | Slug used by the seeder |
 | `DATABASE_COPY_TO_TMP` | auto on Vercel | Copy the database to `/tmp` on start |
+| `DATABASE_TMP_PATH` | `/tmp/card.db` | Where that copy is written |
 | `PRISMA_LOG_QUERIES` | `false` | Print every generated SQL statement |

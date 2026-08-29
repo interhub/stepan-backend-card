@@ -50,7 +50,18 @@ export const syncSeedExperience = async (
     });
     await syncAchievements(prisma, row.id, workplace.achievements);
   }
+  // A row is written by company plus position, so it has to be removed by the
+  // same pair: matching on the company alone keeps the previous row alive after
+  // a promotion inside one company.
   await prisma.experience.deleteMany({
-    where: { profileId, company: { notIn: positions.map((seedPosition) => seedPosition.company) } },
+    where: {
+      profileId,
+      NOT: {
+        OR: positions.map((seedPosition) => ({
+          company: seedPosition.company,
+          position: seedPosition.position,
+        })),
+      },
+    },
   });
 };

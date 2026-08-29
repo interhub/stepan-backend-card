@@ -33,9 +33,9 @@ const countSeededRows = async (prisma: PrismaClient, profileId: string): Promise
   const [skills, experience, achievements, projects, projectResults, links] = await Promise.all([
     prisma.skill.count({ where: { profileId } }),
     prisma.experience.count({ where: { profileId } }),
-    prisma.achievement.count(),
+    prisma.achievement.count({ where: { experience: { profileId } } }),
     prisma.projectItem.count({ where: { profileId } }),
-    prisma.projectResult.count(),
+    prisma.projectResult.count({ where: { project: { profileId } } }),
     prisma.link.count({ where: { profileId } }),
   ]);
   return { skills, experience, achievements, projects, projectResults, links };
