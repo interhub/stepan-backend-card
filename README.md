@@ -116,6 +116,11 @@ That is fine here: the card is read-only.
 
 ## Configuration
 
+Every variable is optional. A missing value and an empty value both fall back to the default
+below, so a fresh clone starts with no `.env` file and no environment variable set at all.
+A value that is present but wrong (`DATABASE_URL` pointing at Postgres, a non numeric `PORT`)
+still stops the application with an explicit message.
+
 | Variable | Default | Purpose |
 | --- | --- | --- |
 | `DATABASE_URL` | `file:./card.db` | SQLite file, relative paths resolve against `prisma/` |

@@ -1,10 +1,13 @@
+import { readEnvNumber, readEnvText } from '../common/env-value';
+
 export const DEFAULT_PORT = 3000;
 export const DEFAULT_GRAPHQL_PATH = '/';
+export const DEFAULT_PROFILE_SLUG = 'stepan-turchenko';
+/** Relative SQLite paths are resolved against `prisma/`, where the committed file lives. */
 export const DEFAULT_DATABASE_URL = 'file:./card.db';
 
-const DEFAULT_PROFILE_SLUG = 'stepan-turchenko';
 const DEFAULT_DATABASE_TMP_PATH = '/tmp/card.db';
-const DECIMAL_RADIX = 10;
+const EMPTY_TEXT = '';
 const TRUTHY_FLAG_VALUES = ['true', '1', 'yes'];
 
 export interface DatabaseConfiguration {
@@ -26,21 +29,26 @@ export interface AppConfiguration {
   database: DatabaseConfiguration;
 }
 
-const isTruthyFlag = (value: string | undefined): boolean => {
-  if (value === undefined) {
-    return false;
-  }
-  return TRUTHY_FLAG_VALUES.includes(value);
+const isTruthyFlag = (rawValue: string | undefined): boolean => {
+  const flagValue = readEnvText(rawValue, EMPTY_TEXT);
+  return TRUTHY_FLAG_VALUES.includes(flagValue);
 };
 
+/** Vercel sets this variable on both the build step and the lambda runtime. */
+const isVercelRuntime = (): boolean => readEnvText(process.env.VERCEL, EMPTY_TEXT).length > 0;
+
+/**
+ * Every value has a default, so the application boots on a freshly cloned
+ * repository with no `.env` file and no environment variable at all.
+ */
 export const loadConfiguration = (): AppConfiguration => ({
-  port: Number.parseInt(process.env.PORT ?? String(DEFAULT_PORT), DECIMAL_RADIX),
-  graphqlPath: process.env.GRAPHQL_PATH ?? DEFAULT_GRAPHQL_PATH,
-  profileSlug: process.env.PROFILE_SLUG ?? DEFAULT_PROFILE_SLUG,
+  port: readEnvNumber(process.env.PORT, DEFAULT_PORT),
+  graphqlPath: readEnvText(process.env.GRAPHQL_PATH, DEFAULT_GRAPHQL_PATH),
+  profileSlug: readEnvText(process.env.PROFILE_SLUG, DEFAULT_PROFILE_SLUG),
   database: {
-    url: process.env.DATABASE_URL ?? DEFAULT_DATABASE_URL,
-    copyToTmp: Boolean(process.env.VERCEL) || isTruthyFlag(process.env.DATABASE_COPY_TO_TMP),
-    tmpPath: process.env.DATABASE_TMP_PATH ?? DEFAULT_DATABASE_TMP_PATH,
+    url: readEnvText(process.env.DATABASE_URL, DEFAULT_DATABASE_URL),
+    copyToTmp: isVercelRuntime() || isTruthyFlag(process.env.DATABASE_COPY_TO_TMP),
+    tmpPath: readEnvText(process.env.DATABASE_TMP_PATH, DEFAULT_DATABASE_TMP_PATH),
     logQueries: isTruthyFlag(process.env.PRISMA_LOG_QUERIES),
   },
 });
