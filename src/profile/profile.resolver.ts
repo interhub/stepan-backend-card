@@ -29,12 +29,12 @@ export class ProfileResolver {
   profile(
     @Args('slug', { type: () => String, nullable: true }) slug?: string,
   ): Promise<ProfileType> {
-    return this.profileService.findOne(slug);
+    return this.profileService.getOne(slug);
   }
 
   @Query(() => [ProfileType], { description: 'Every card stored in the database.' })
   profiles(): Promise<ProfileType[]> {
-    return this.profileService.findAll();
+    return this.profileService.findMany();
   }
 
   @ResolveField(() => [SkillType])

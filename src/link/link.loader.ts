@@ -10,7 +10,7 @@ export class LinkLoader {
 
   constructor(private readonly service: LinkService) {
     this.byProfileId = new DataLoader<string, LinkType[]>((profileIds) =>
-      this.service.findByProfileIds(profileIds),
+      this.service.findManyByProfileIds(profileIds),
     );
   }
 }

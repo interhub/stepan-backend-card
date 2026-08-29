@@ -1,14 +1,24 @@
 import { copyFileSync, existsSync } from 'node:fs';
 import { isAbsolute, resolve } from 'node:path';
 
-import { prismaDir } from '../common/paths';
+import { resolvePrismaDir } from '../common/paths';
 
-const FILE_PREFIX = 'file:';
+const FILE_URL_PREFIX = 'file:';
+
+const stripFileUrlPrefix = (url: string): string => {
+  if (url.startsWith(FILE_URL_PREFIX)) {
+    return url.slice(FILE_URL_PREFIX.length);
+  }
+  return url;
+};
 
 /** Prisma resolves relative SQLite paths against the schema folder. */
-export const toAbsoluteDatabasePath = (url: string): string => {
-  const raw = url.startsWith(FILE_PREFIX) ? url.slice(FILE_PREFIX.length) : url;
-  return isAbsolute(raw) ? raw : resolve(prismaDir(), raw);
+const toAbsoluteDatabasePath = (url: string): string => {
+  const rawPath = stripFileUrlPrefix(url);
+  if (isAbsolute(rawPath)) {
+    return rawPath;
+  }
+  return resolve(resolvePrismaDir(), rawPath);
 };
 
 export interface DatabaseFileOptions {
@@ -24,19 +34,17 @@ export interface DatabaseFileOptions {
  */
 export const resolveRuntimeDatabaseUrl = (options: DatabaseFileOptions): string => {
   const source = toAbsoluteDatabasePath(options.url);
-
   if (!options.copyToTmp) {
-    return `${FILE_PREFIX}${source}`;
+    return `${FILE_URL_PREFIX}${source}`;
   }
-
-  if (!existsSync(options.tmpPath)) {
-    if (!existsSync(source)) {
-      throw new Error(
-        `Bundled SQLite file is missing at "${source}". Run "npm run db:prepare" and commit prisma/card.db before deploying.`,
-      );
-    }
-    copyFileSync(source, options.tmpPath);
+  if (existsSync(options.tmpPath)) {
+    return `${FILE_URL_PREFIX}${options.tmpPath}`;
   }
-
-  return `${FILE_PREFIX}${options.tmpPath}`;
+  if (!existsSync(source)) {
+    throw new Error(
+      `Bundled SQLite file is missing at "${source}". Run "npm run db:prepare" and commit prisma/card.db before deploying.`,
+    );
+  }
+  copyFileSync(source, options.tmpPath);
+  return `${FILE_URL_PREFIX}${options.tmpPath}`;
 };

@@ -1,11 +1,16 @@
 import { resolve } from 'node:path';
 
+const PRISMA_DIR_NAME = 'prisma';
+const SEED_DATA_DIR_NAME = 'data';
+const SEED_DATA_FILE_NAME = 'profile-seed.json';
+
 /**
  * Compiled sources live in <root>/dist/<layer>/<file>.js, so the project root
  * is always two levels above this file at runtime.
  */
-export const projectRoot = (): string => resolve(__dirname, '..', '..');
+export const resolveProjectRoot = (): string => resolve(__dirname, '..', '..');
 
-export const prismaDir = (): string => resolve(projectRoot(), 'prisma');
+export const resolvePrismaDir = (): string => resolve(resolveProjectRoot(), PRISMA_DIR_NAME);
 
-export const seedDataFile = (): string => resolve(projectRoot(), 'data', 'profile-seed.json');
+export const resolveSeedDataFile = (): string =>
+  resolve(resolveProjectRoot(), SEED_DATA_DIR_NAME, SEED_DATA_FILE_NAME);

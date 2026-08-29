@@ -5,6 +5,7 @@ import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloServerPluginLandingPageLocalDefault } from '@apollo/server/plugin/landingPage/default';
 
 import { AppConfigModule } from './config/config.module';
+import { DEFAULT_GRAPHQL_PATH } from './config/configuration';
 import { ExperienceModule } from './experience/experience.module';
 import { LinkModule } from './link/link.module';
 import { PrismaModule } from './prisma/prisma.module';
@@ -24,14 +25,12 @@ import { SkillModule } from './skill/skill.module';
         // in memory, because a serverless file system is read-only.
         autoSchemaFile: true,
         sortSchema: true,
-        path: configService.get<string>('graphqlPath', '/'),
+        path: configService.get<string>('graphqlPath', DEFAULT_GRAPHQL_PATH),
         introspection: true,
         // The built-in playground is replaced by Apollo Sandbox, which is
         // served in every environment including production.
         playground: false,
-        plugins: [
-          ApolloServerPluginLandingPageLocalDefault({ includeCookies: true, embed: true }),
-        ],
+        plugins: [ApolloServerPluginLandingPageLocalDefault({ includeCookies: true, embed: true })],
       }),
     }),
     ProfileModule,

@@ -10,7 +10,7 @@ export class ProjectLoader {
 
   constructor(private readonly service: ProjectService) {
     this.byProfileId = new DataLoader<string, ProjectType[]>((profileIds) =>
-      this.service.findByProfileIds(profileIds),
+      this.service.findManyByProfileIds(profileIds),
     );
   }
 }

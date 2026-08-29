@@ -14,7 +14,7 @@ export class SkillLoader {
 
   constructor(private readonly service: SkillService) {
     this.byProfileId = new DataLoader<string, SkillType[]>((profileIds) =>
-      this.service.findByProfileIds(profileIds),
+      this.service.findManyByProfileIds(profileIds),
     );
   }
 }

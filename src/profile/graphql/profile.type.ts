@@ -5,7 +5,9 @@ export class ProfileType {
   @Field(() => ID)
   id: string;
 
-  @Field(() => String, { description: 'Stable human readable identifier used to look the card up.' })
+  @Field(() => String, {
+    description: 'Stable human readable identifier used to look the card up.',
+  })
   slug: string;
 
   @Field(() => String)

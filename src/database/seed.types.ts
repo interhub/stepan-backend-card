@@ -40,3 +40,11 @@ export interface SeedFile {
   experience: SeedExperience[];
   projects: SeedProject[];
 }
+
+export interface SeedCounts {
+  skills: number;
+  experience: number;
+  achievements: number;
+  projects: number;
+  links: number;
+}

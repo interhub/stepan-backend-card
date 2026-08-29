@@ -12,10 +12,10 @@ export class ExperienceLoader {
 
   constructor(private readonly service: ExperienceService) {
     this.byProfileId = new DataLoader<string, ExperienceType[]>((profileIds) =>
-      this.service.findByProfileIds(profileIds),
+      this.service.findManyByProfileIds(profileIds),
     );
     this.achievementsByExperienceId = new DataLoader<string, string[]>((experienceIds) =>
-      this.service.findAchievementsByExperienceIds(experienceIds),
+      this.service.findManyAchievementsByExperienceIds(experienceIds),
     );
   }
 }

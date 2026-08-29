@@ -1,42 +1,49 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { Profile } from '@prisma/client';
 
-import { splitLabels } from '../common/group-by';
+import { splitLabels } from '../common/labels';
 import { ProfileType } from './graphql/profile.type';
-import { ProfileRepository } from './profile.repository';
+import { ProfileRepository, ProfileRow } from './profile.repository';
+
+const toGraphqlProfile = (row: ProfileRow): ProfileType => ({
+  id: row.id,
+  slug: row.slug,
+  name: row.name,
+  title: row.title,
+  description: row.description,
+  location: row.location,
+  email: row.email,
+  languages: splitLabels(row.languages),
+});
+
+const buildProfileNotFoundMessage = (slug?: string): string => {
+  if (slug) {
+    return `Profile "${slug}" was not found`;
+  }
+  return 'The database contains no profile yet';
+};
 
 @Injectable()
 export class ProfileService {
   constructor(private readonly repository: ProfileRepository) {}
 
   /** Without a slug the card falls back to the only profile stored in the database. */
-  async findOne(slug?: string): Promise<ProfileType> {
-    const row = slug ? await this.repository.findBySlug(slug) : await this.repository.findFirst();
-
+  async getOne(slug?: string): Promise<ProfileType> {
+    const row = await this.findOneRow(slug);
     if (!row) {
-      throw new NotFoundException(
-        slug ? `Profile "${slug}" was not found` : 'The database contains no profile yet',
-      );
+      throw new NotFoundException(buildProfileNotFoundMessage(slug));
     }
-
-    return ProfileService.toGraphql(row);
+    return toGraphqlProfile(row);
   }
 
-  async findAll(): Promise<ProfileType[]> {
-    const rows = await this.repository.findAll();
-    return rows.map(ProfileService.toGraphql);
+  async findMany(): Promise<ProfileType[]> {
+    const rows = await this.repository.findMany();
+    return rows.map(toGraphqlProfile);
   }
 
-  private static toGraphql(row: Profile): ProfileType {
-    return {
-      id: row.id,
-      slug: row.slug,
-      name: row.name,
-      title: row.title,
-      description: row.description,
-      location: row.location,
-      email: row.email,
-      languages: splitLabels(row.languages),
-    };
+  private findOneRow(slug?: string): Promise<ProfileRow | null> {
+    if (slug) {
+      return this.repository.findOneBySlug(slug);
+    }
+    return this.repository.findOneOldest();
   }
 }

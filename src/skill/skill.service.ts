@@ -1,22 +1,24 @@
 import { Injectable } from '@nestjs/common';
-import { Skill } from '@prisma/client';
 
 import { groupByKey } from '../common/group-by';
 import { SkillType } from './graphql/skill.type';
-import { SkillRepository } from './skill.repository';
+import { SkillRepository, SkillRow } from './skill.repository';
+
+const toGraphqlSkill = (row: SkillRow): SkillType => ({
+  id: row.id,
+  name: row.name,
+  category: row.category,
+  level: row.level,
+});
 
 @Injectable()
 export class SkillService {
   constructor(private readonly repository: SkillRepository) {}
 
-  async findByProfileIds(profileIds: readonly string[]): Promise<SkillType[][]> {
+  async findManyByProfileIds(profileIds: readonly string[]): Promise<SkillType[][]> {
     const rows = await this.repository.findManyByProfileIds(profileIds);
     return groupByKey(rows, profileIds, (row) => row.profileId).map((bucket) =>
-      bucket.map(SkillService.toGraphql),
+      bucket.map(toGraphqlSkill),
     );
-  }
-
-  private static toGraphql(row: Skill): SkillType {
-    return { id: row.id, name: row.name, category: row.category, level: row.level };
   }
 }
