@@ -1,0 +1,10 @@
+node_modules/
+dist/
+*.tsbuildinfo
+.vercel/
+.DS_Store
+*.log
+
+prisma/*.db-journal
+# prisma/card.db is committed on purpose: the Vercel lambda cannot run the
+# Prisma CLI, so the deployment bundle must already contain a seeded database.

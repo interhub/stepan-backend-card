@@ -1,0 +1,126 @@
+# Digital Business Card API
+
+A GraphQL backend that serves one professional profile and everything attached to it:
+skills, work experience, projects and links.
+
+**Stack:** TypeScript, Node.js, NestJS, Prisma, GraphQL (Apollo, code-first), SQLite, Docker.
+
+**Live Apollo Sandbox:** `LIVE_URL`
+
+---
+
+## Run locally
+
+```bash
+npm install
+npm run db:prepare   # generate client, create the SQLite file, build, seed
+npm start            # http://localhost:3000
+```
+
+`db:prepare` is idempotent, so it is safe to run it again at any time.
+Open `http://localhost:3000` in a browser to get Apollo Sandbox, or query the same URL with curl.
+
+## Run with Docker
+
+```bash
+docker compose up --build   # http://localhost:3000
+```
+
+The container entrypoint applies the Prisma schema and seeds the database before the API starts,
+so a fresh container is always ready without any manual step.
+
+## Example query
+
+```graphql
+query {
+  profile {
+    name
+    description
+    skills { name }
+    experience { company position achievements }
+    projects { name tags }
+    links { label url }
+  }
+}
+```
+
+```bash
+curl -s http://localhost:3000/ \
+  -H 'Content-Type: application/json' \
+  -d '{"query":"query { profile { name description skills { name } experience { company position } projects { name } } }"}'
+```
+
+---
+
+## Architecture
+
+```
+GraphQL request
+      |
+  Resolver      transport only: arguments in, DTOs out, no database access
+      |
+  Service       business logic, Prisma rows mapped to GraphQL object types
+      |
+ Repository     the only layer that touches PrismaService
+      |
+  PrismaService global module, connects on module init, closes on shutdown
+```
+
+One module per entity, each with the same three files plus a request scoped DataLoader:
+
+```
+src/
+  config/         @nestjs/config module, typed configuration, env validation
+  prisma/         global PrismaModule, PrismaService, serverless database file handling
+  database/       idempotent seeding from data/profile-seed.json
+  common/         DataLoader grouping helper, path helpers
+  profile/        resolver (queries + @ResolveField for every relation), service, repository
+  skill/          repository, service, loader
+  experience/     repository, service, loader, resolver for the achievements relation
+  project/        repository, service, loader
+  link/           repository, service, loader
+api/index.ts      Vercel handler, caches the initialised Nest application between invocations
+```
+
+Relations are never resolved with one fat `include`. Each nested field is a `@ResolveField`
+backed by a per-request DataLoader, so the query above costs exactly six SQL statements
+(one per entity type) no matter how many rows come back. Set `PRISMA_LOG_QUERIES=true` to see them.
+
+Apollo Sandbox is mounted at the root path in every environment through
+`ApolloServerPluginLandingPageLocalDefault({ includeCookies: true, embed: true })`,
+with the legacy playground turned off, so the deployed production URL is explorable too.
+
+## Database
+
+SQLite was chosen because the card is a small read-only dataset and a single file needs no
+external service, which is what makes the one-command Docker run and the Vercel deployment possible.
+
+Achievements live in their own `achievements` table rather than a JSON column, because that keeps
+them ordered, deduplicated by a natural key for idempotent seeding, and gives the N+1 problem a
+second real relation to solve.
+
+Short display labels (`languages`, project `tags`) are stored as a delimited string: SQLite has no
+array type and those values are never filtered on.
+
+## Deploying to Vercel
+
+A lambda cannot run the Prisma CLI and cannot write anywhere except `/tmp`, so:
+
+1. `npm run db:prepare` builds and seeds `prisma/card.db`, and that file is committed to git.
+2. On a cold start the app copies `prisma/card.db` to `/tmp/card.db` and Prisma opens the copy.
+3. `binaryTargets = ["native", "rhel-openssl-3.0.x"]` ships the query engine the Vercel runtime needs.
+4. `vercel.json` rewrites every path to `api/index` and bundles `dist`, `prisma` and the Prisma client.
+
+Because the database lives in `/tmp`, writes are per-instance and disappear with the instance.
+That is fine here: the card is read-only.
+
+## Configuration
+
+| Variable | Default | Purpose |
+| --- | --- | --- |
+| `DATABASE_URL` | `file:./card.db` | SQLite file, relative paths resolve against `prisma/` |
+| `PORT` | `3000` | HTTP port |
+| `GRAPHQL_PATH` | `/` | GraphQL endpoint and Sandbox path |
+| `PROFILE_SLUG` | `stepan-turchenko` | Slug used by the seeder |
+| `DATABASE_COPY_TO_TMP` | auto on Vercel | Copy the database to `/tmp` on start |
+| `PRISMA_LOG_QUERIES` | `false` | Print every generated SQL statement |

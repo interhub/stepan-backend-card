@@ -1,0 +1,159 @@
+{
+  "profile": {
+    "name": "Stepan Turchenko",
+    "title": "AI Generalist & AI Integration Specialist | Senior Fullstack Developer & Tech Lead",
+    "summary": "More than six years on heavy applications and the teams behind them, from a women-health startup in Delaware to retail and B2B products in Russia and agentic mobile work in Europe. I run things end to end: architecture, delivery, DevOps, hiring, and the reliability work - monitoring, alerts, and incident response - that keeps a product up under real load. I interview, negotiate, and ship in English, and I am as comfortable owning a roadmap as I am taking on a single hard problem. Right now most of my attention goes to bringing AI agents and automation into how companies actually operate.",
+    "location": "Kaliningrad, Russia",
+    "email": "stepanstepan4@gmail.com",
+    "languages": ["English (Proficient)", "Russian (Native)"],
+    "links": [
+      { "label": "Website", "url": "https://personal-info.ru/" },
+      { "label": "LinkedIn", "url": "https://www.linkedin.com/in/stepanturchenko" },
+      { "label": "GitHub", "url": "https://github.com/interhub" },
+      { "label": "Telegram", "url": "https://t.me/Stepan_Turchenko" },
+      { "label": "Instagram", "url": "https://www.instagram.com/stepan_turchenko/" },
+      { "label": "X", "url": "https://x.com/interhubs" }
+    ]
+  },
+  "skills": [
+    { "name": "Claude Code", "category": "AI", "level": "Expert" },
+    { "name": "AI Agents", "category": "AI", "level": "Expert" },
+    { "name": "Prompt Engineering", "category": "AI", "level": "Advanced" },
+    { "name": "N8N", "category": "AI", "level": "Advanced" },
+    { "name": "Cursor", "category": "AI", "level": "Advanced" },
+    { "name": "React", "category": "Frontend", "level": "Expert" },
+    { "name": "React Native", "category": "Frontend", "level": "Expert" },
+    { "name": "TypeScript", "category": "Frontend", "level": "Expert" },
+    { "name": "Zustand", "category": "Frontend", "level": "Advanced" },
+    { "name": "Expo", "category": "Frontend", "level": "Advanced" },
+    { "name": "Node.js", "category": "Backend", "level": "Expert" },
+    { "name": "Nest.js", "category": "Backend", "level": "Expert" },
+    { "name": "Express", "category": "Backend", "level": "Advanced" },
+    { "name": "Microservices", "category": "Backend", "level": "Advanced" },
+    { "name": "WebSockets", "category": "Backend", "level": "Intermediate" },
+    { "name": "PostgreSQL", "category": "Data", "level": "Advanced" },
+    { "name": "MongoDB", "category": "Data", "level": "Advanced" },
+    { "name": "Supabase", "category": "Data", "level": "Advanced" },
+    { "name": "Redis", "category": "Data", "level": "Advanced" },
+    { "name": "RabbitMQ", "category": "Data", "level": "Intermediate" },
+    { "name": "Docker", "category": "DevOps", "level": "Expert" },
+    { "name": "CI/CD", "category": "DevOps", "level": "Expert" },
+    { "name": "Google Cloud", "category": "DevOps", "level": "Advanced" },
+    { "name": "AWS", "category": "DevOps", "level": "Advanced" },
+    { "name": "Nginx", "category": "DevOps", "level": "Advanced" },
+    { "name": "Grafana", "category": "DevOps", "level": "Intermediate" },
+    { "name": "Team Management", "category": "Leadership", "level": "Expert" },
+    { "name": "Technical Strategy", "category": "Leadership", "level": "Expert" },
+    { "name": "Tech Interviews", "category": "Leadership", "level": "Advanced" },
+    { "name": "Git Flow Ownership", "category": "Leadership", "level": "Advanced" }
+  ],
+  "experience": [
+    {
+      "company": "XPN",
+      "position": "Engineering and Management",
+      "periodStart": "2025-10",
+      "periodEnd": null,
+      "achievements": [
+        "AI agentic mobile app and backend services development",
+        "Marketing automation",
+        "Team management"
+      ]
+    },
+    {
+      "company": "Aspect Health Global Inc",
+      "position": "Fullstack Engineering",
+      "periodStart": "2022-01",
+      "periodEnd": null,
+      "achievements": [
+        "Wellness & Women Health app development",
+        "AI agentic app development",
+        "Engineering team management",
+        "High load application support",
+        "Achieved 99.9% system uptime by implementing robust DevOps practices and continuous monitoring solutions, clustering",
+        "Boosted user engagement by 40% by implementing new analytics features and refining UX/UI design elements",
+        "Led end-to-end development of 3 heavy services with an active user base",
+        "Undergone complex business scaling"
+      ]
+    },
+    {
+      "company": "NANA800.io - Cloud Platform",
+      "position": "Founder & Technical Lead",
+      "periodStart": "2024-01",
+      "periodEnd": null,
+      "achievements": [
+        "Personal IT business ownership"
+      ]
+    },
+    {
+      "company": "Epam Systems",
+      "position": "React Native Engineer",
+      "periodStart": "2021-10",
+      "periodEnd": "2022-03",
+      "achievements": [
+        "Mobile development, Fullstack Engineering, QA Automation"
+      ]
+    },
+    {
+      "company": "SPORT-VMESTE",
+      "position": "Senior Fullstack Developer",
+      "periodStart": "2021-09",
+      "periodEnd": "2022-01",
+      "achievements": [
+        "React Native & Node.js, Fullstack Engineering"
+      ]
+    },
+    {
+      "company": "RuYou",
+      "position": "React Native Developer",
+      "periodStart": "2021-03",
+      "periodEnd": "2022-01",
+      "achievements": [
+        "Outsource development"
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "name": "Painta",
+      "description": "An AI art coach end to end: React Native app, Supabase backend, payments, and N8N automations, live and growing.",
+      "url": "https://painta.io",
+      "tags": ["AI Product", "React Native", "Supabase", "N8N", "DevOps", "Payments"]
+    },
+    {
+      "name": "Aspect Health",
+      "description": "A women-health platform with an AI app: three years owning three heavy services on Node.js and GCP, plus company-wide QA.",
+      "url": "https://www.aspect-health.com",
+      "tags": ["Node.js", "Nest.js", "GCP", "Microservices", "QA", "Team Lead"]
+    },
+    {
+      "name": "Nana800",
+      "description": "My own low-code product: visual scenarios, integrations, and AI blocks turn ideas into working automated processes.",
+      "url": "http://nana800.io",
+      "tags": ["Founder", "Low-code", "AI", "Automation", "Integrations"]
+    },
+    {
+      "name": "Moscow Sport",
+      "description": "Moscow city sport mobile app: worked on it as an engineer.",
+      "url": "https://sport.mos.ru/",
+      "tags": ["Gov", "React Native", "Mobile"]
+    },
+    {
+      "name": "Bismap",
+      "description": "A B2B tenders app: business registration, applications, and the full backend, then handed to the client to run.",
+      "url": "https://bismap.net/",
+      "tags": ["Nest.js", "React Native", "MongoDB", "B2B", "Backend"]
+    },
+    {
+      "name": "Stayfit",
+      "description": "A corporate wellbeing app: sport challenges, online consultations, training content, and team competition.",
+      "url": "https://stayfitt.ru/",
+      "tags": ["React Native", "Node.js", "GraphQL", "MongoDB", "Tech Lead"]
+    },
+    {
+      "name": "Bigam",
+      "description": "A hardware-store chain retail app: catalog, filters, delivery, in-app and on-delivery payment, personalized pricing, and 1C integrations, shipped to store.",
+      "url": "https://www.bigam.ru/",
+      "tags": ["React Native", "Node.js", "1C", "API", "DevOps"]
+    }
+  ]
+}

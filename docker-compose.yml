@@ -1,0 +1,14 @@
+services:
+  card-api:
+    build:
+      context: .
+    image: stepan-backend-card:latest
+    container_name: stepan-backend-card
+    ports:
+      - '3000:3000'
+    environment:
+      DATABASE_URL: 'file:/app/prisma/card.db'
+      PORT: '3000'
+      GRAPHQL_PATH: '/'
+      PROFILE_SLUG: 'stepan-turchenko'
+    restart: unless-stopped

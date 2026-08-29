@@ -1,0 +1,47 @@
+{
+  "name": "stepan-backend-card",
+  "version": "1.0.0",
+  "description": "Digital business card backend: NestJS + GraphQL (code-first) + Prisma + SQLite",
+  "license": "MIT",
+  "private": true,
+  "scripts": {
+    "prisma:generate": "prisma generate",
+    "db:push": "prisma db push --skip-generate",
+    "db:seed": "node dist/database/seed.js",
+    "db:prepare": "npm run prisma:generate && npm run db:push && npm run build:nest && npm run db:seed",
+    "build:nest": "nest build",
+    "build": "npm run prisma:generate && npm run build:nest",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "start": "node dist/main.js",
+    "start:dev": "nest start --watch",
+    "prestart:local": "npm run db:prepare",
+    "start:local": "node dist/main.js",
+    "vercel-build": "npm run build",
+    "format": "prettier --write \"src/**/*.ts\" \"api/**/*.ts\""
+  },
+  "dependencies": {
+    "@apollo/server": "^5.0.0",
+    "@nestjs/apollo": "^13.0.3",
+    "@nestjs/common": "^11.0.10",
+    "@nestjs/config": "^4.0.0",
+    "@nestjs/core": "^11.0.10",
+    "@nestjs/graphql": "^13.0.3",
+    "@nestjs/platform-express": "^11.0.10",
+    "@prisma/client": "^6.4.1",
+    "dataloader": "^2.2.3",
+    "@as-integrations/express5": "^1.1.0",
+    "express": "^5.2.1",
+    "graphql": "^16.10.0",
+    "prisma": "^6.4.1",
+    "reflect-metadata": "^0.2.2",
+    "rxjs": "^7.8.1"
+  },
+  "devDependencies": {
+    "@nestjs/cli": "^11.0.5",
+    "@nestjs/schematics": "^11.0.1",
+    "@types/express": "^5.0.0",
+    "@types/node": "^22.13.5",
+    "prettier": "^3.5.2",
+    "typescript": "^5.7.3"
+  }
+}
