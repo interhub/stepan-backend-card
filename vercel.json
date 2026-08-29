@@ -1,6 +1,8 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
+  "framework": null,
   "buildCommand": "npm run vercel-build",
+  "outputDirectory": "public",
   "functions": {
     "api/index.ts": {
       "includeFiles": "{dist/**,prisma/**,data/**,node_modules/.prisma/client/**,node_modules/@prisma/client/**}",

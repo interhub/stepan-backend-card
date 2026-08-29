@@ -1,7 +1,8 @@
 generator client {
   provider      = "prisma-client-js"
-  // "rhel-openssl-3.0.x" is required by the AWS Lambda runtime behind Vercel.
-  binaryTargets = ["native", "rhel-openssl-3.0.x"]
+  // Vercel runs the function on Amazon Linux; both CPU architectures are
+  // listed so the engine is present on arm64 and x86_64 lambdas alike.
+  binaryTargets = ["native", "linux-arm64-openssl-3.0.x", "rhel-openssl-3.0.x"]
 }
 
 datasource db {
