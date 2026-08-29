@@ -10,6 +10,9 @@ const toGraphqlProject = (row: ProjectRow): ProjectType => ({
   name: row.name,
   description: row.description,
   url: row.url,
+  role: row.role,
+  periodStart: row.periodStart,
+  periodEnd: row.periodEnd,
   tags: splitLabels(row.tags),
 });
 
@@ -21,6 +24,13 @@ export class ProjectService {
     const rows = await this.repository.findManyByProfileIds(profileIds);
     return groupByKey(rows, profileIds, (row) => row.profileId).map((bucket) =>
       bucket.map(toGraphqlProject),
+    );
+  }
+
+  async findManyResultsByProjectIds(projectIds: readonly string[]): Promise<string[][]> {
+    const rows = await this.repository.findManyResultsByProjectIds(projectIds);
+    return groupByKey(rows, projectIds, (row) => row.projectId).map((bucket) =>
+      bucket.map((row) => row.text),
     );
   }
 }

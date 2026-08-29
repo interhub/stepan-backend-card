@@ -38,7 +38,7 @@ query {
     description
     skills { name }
     experience { company position achievements }
-    projects { name tags }
+    projects { name role periodStart periodEnd results tags }
     links { label url }
   }
 }
@@ -77,13 +77,13 @@ src/
   profile/        resolver (queries + @ResolveField for every relation), service, repository
   skill/          repository, service, loader
   experience/     repository, service, loader, resolver for the achievements relation
-  project/        repository, service, loader
+  project/        repository, service, loader, resolver for the results relation
   link/           repository, service, loader
 api/index.ts      Vercel handler, caches the initialised Nest application between invocations
 ```
 
 Relations are never resolved with one fat `include`. Each nested field is a `@ResolveField`
-backed by a per-request DataLoader, so the query above costs exactly six SQL statements
+backed by a per-request DataLoader, so the query above costs exactly seven SQL statements
 (one per entity type) no matter how many rows come back. Set `PRISMA_LOG_QUERIES=true` to see them.
 
 Apollo Sandbox is mounted at the root path in every environment through
@@ -95,9 +95,10 @@ with the legacy playground turned off, so the deployed production URL is explora
 SQLite was chosen because the card is a small read-only dataset and a single file needs no
 external service, which is what makes the one-command Docker run and the Vercel deployment possible.
 
-Achievements live in their own `achievements` table rather than a JSON column, because that keeps
-them ordered, deduplicated by a natural key for idempotent seeding, and gives the N+1 problem a
-second real relation to solve.
+Achievements of a position and results of a project live in their own `achievements` and
+`project_results` tables rather than in a JSON column, because that keeps them ordered,
+deduplicated by a natural key for idempotent seeding, and gives the N+1 problem real nested
+relations to solve.
 
 Short display labels (`languages`, project `tags`) are stored as a delimited string: SQLite has no
 array type and those values are never filtered on.

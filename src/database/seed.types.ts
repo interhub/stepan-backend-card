@@ -31,6 +31,10 @@ export interface SeedProject {
   name: string;
   description: string;
   url: string;
+  role: string;
+  periodStart: string | null;
+  periodEnd: string | null;
+  results: string[];
   tags: string[];
 }
 
@@ -46,5 +50,6 @@ export interface SeedCounts {
   experience: number;
   achievements: number;
   projects: number;
+  projectResults: number;
   links: number;
 }

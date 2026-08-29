@@ -30,14 +30,15 @@ const createSeedClient = (database: DatabaseConfiguration): PrismaClient =>
   });
 
 const countSeededRows = async (prisma: PrismaClient, profileId: string): Promise<SeedCounts> => {
-  const [skills, experience, achievements, projects, links] = await Promise.all([
+  const [skills, experience, achievements, projects, projectResults, links] = await Promise.all([
     prisma.skill.count({ where: { profileId } }),
     prisma.experience.count({ where: { profileId } }),
     prisma.achievement.count(),
     prisma.projectItem.count({ where: { profileId } }),
+    prisma.projectResult.count(),
     prisma.link.count({ where: { profileId } }),
   ]);
-  return { skills, experience, achievements, projects, links };
+  return { skills, experience, achievements, projects, projectResults, links };
 };
 
 /**
@@ -59,7 +60,8 @@ const seed = async (): Promise<void> => {
     const counts = await countSeededRows(prisma, profileId);
     logger.log(
       `Seeded profile "${slug}": ${counts.skills} skills, ${counts.experience} positions, ` +
-        `${counts.achievements} achievements, ${counts.projects} projects, ${counts.links} links`,
+        `${counts.achievements} achievements, ${counts.projects} projects, ` +
+        `${counts.projectResults} project results, ${counts.links} links`,
     );
   } finally {
     await prisma.$disconnect();

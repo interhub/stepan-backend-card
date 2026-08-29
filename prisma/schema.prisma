@@ -80,19 +80,39 @@ model Achievement {
 }
 
 model ProjectItem {
-  id          String @id @default(cuid())
+  id          String  @id @default(cuid())
   name        String
   description String
   url         String
+  role        String
+  // Both ends are optional: a project can still be running, and a date that is
+  // not confirmed is left empty instead of being guessed.
+  periodStart String?
+  periodEnd   String?
   tags        String
-  sortOrder   Int    @default(0)
+  sortOrder   Int     @default(0)
 
   profileId String
   profile   Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
 
+  results ProjectResult[]
+
   @@unique([profileId, name])
   @@index([profileId])
   @@map("projects")
+}
+
+model ProjectResult {
+  id        String @id @default(cuid())
+  text      String
+  sortOrder Int    @default(0)
+
+  projectId String
+  project   ProjectItem @relation(fields: [projectId], references: [id], onDelete: Cascade)
+
+  @@unique([projectId, text])
+  @@index([projectId])
+  @@map("project_results")
 }
 
 model Link {

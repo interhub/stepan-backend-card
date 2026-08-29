@@ -117,43 +117,177 @@
       "name": "Painta",
       "description": "An AI art coach end to end: React Native app, Supabase backend, payments, and N8N automations, live and growing.",
       "url": "https://painta.io",
-      "tags": ["AI Product", "React Native", "Supabase", "N8N", "DevOps", "Payments"]
-    },
-    {
-      "name": "Aspect Health",
-      "description": "A women-health platform with an AI app: three years owning three heavy services on Node.js and GCP, plus company-wide QA.",
-      "url": "https://www.aspect-health.com",
-      "tags": ["Node.js", "Nest.js", "GCP", "Microservices", "QA", "Team Lead"]
-    },
-    {
-      "name": "Nana800",
-      "description": "My own low-code product: visual scenarios, integrations, and AI blocks turn ideas into working automated processes.",
-      "url": "http://nana800.io",
-      "tags": ["Founder", "Low-code", "AI", "Automation", "Integrations"]
+      "role": "Full-stack developer and architect in a two-person tech team",
+      "periodStart": "2025-10",
+      "periodEnd": null,
+      "results": [
+        "Delivered the MVP on a Supabase backend, with N8N automations for payment triggers and Adapty payments.",
+        "Set up a Directus admin panel with Firebase remote config for content and configuration.",
+        "Reached stable operation shortly after launch; the product is live and sales keep growing."
+      ],
+      "tags": [
+        "AI Product",
+        "React Native",
+        "React",
+        "TypeScript",
+        "Supabase",
+        "PostgreSQL",
+        "N8N",
+        "Adapty",
+        "DigitalOcean",
+        "DevOps",
+        "Payments"
+      ]
     },
     {
       "name": "Moscow Sport",
       "description": "Moscow city sport mobile app: worked on it as an engineer.",
       "url": "https://sport.mos.ru/",
+      "role": "Mobile developer and tech lead for a five-person team",
+      "periodStart": "2024-02",
+      "periodEnd": null,
+      "results": [
+        "Restored full application functionality after a previous contractor's failed implementation.",
+        "Managed the recovery end to end across backend and frontend with the development team.",
+        "Brought the application to stable operation."
+      ],
       "tags": ["Gov", "React Native", "Mobile"]
     },
     {
-      "name": "Bismap",
-      "description": "A B2B tenders app: business registration, applications, and the full backend, then handed to the client to run.",
-      "url": "https://bismap.net/",
-      "tags": ["Nest.js", "React Native", "MongoDB", "B2B", "Backend"]
+      "name": "Nana800",
+      "description": "My own low-code product: visual scenarios, integrations, and AI blocks turn ideas into working automated processes.",
+      "url": "http://nana800.io",
+      "role": "Founder and technical lead",
+      "periodStart": "2024-01",
+      "periodEnd": null,
+      "results": ["Owned and run as a personal IT business."],
+      "tags": ["Founder", "Low-code", "AI", "Automation", "Integrations"]
+    },
+    {
+      "name": "Aspect Health",
+      "description": "A women-health platform with an AI app: three years owning three heavy services on Node.js and GCP, plus company-wide QA.",
+      "url": "https://www.aspect-health.com",
+      "role": "Fullstack developer and tech lead for a five-person team",
+      "periodStart": "2022-10",
+      "periodEnd": null,
+      "results": [
+        "Delivered three services and held 99.9% uptime through DevOps practices and monitoring.",
+        "Increased user engagement by 40% through data-driven UX and UI improvements.",
+        "Built an automated marketing, targeting, and attribution system."
+      ],
+      "tags": [
+        "Node.js",
+        "Nest.js",
+        "React Native",
+        "TypeScript",
+        "GCP",
+        "PostgreSQL",
+        "MongoDB",
+        "Redis",
+        "Microservices",
+        "QA",
+        "Team Lead"
+      ]
+    },
+    {
+      "name": "Liverpool",
+      "description": "A restaurant chain delivery app: menu, order and payment, reservation status, and reviews.",
+      "url": "https://vk.com/lkcafe",
+      "role": "Mobile lead and backend team lead",
+      "periodStart": "2022-01",
+      "periodEnd": "2022-10",
+      "results": [
+        "Developed the application in full and handed it over to the customer to run.",
+        "The business later closed, and the app is no longer supported."
+      ],
+      "tags": ["TypeScript", "React Native", "Redux", "WebSockets", "Payment Integration"]
     },
     {
       "name": "Stayfit",
       "description": "A corporate wellbeing app: sport challenges, online consultations, training content, and team competition.",
       "url": "https://stayfitt.ru/",
-      "tags": ["React Native", "Node.js", "GraphQL", "MongoDB", "Tech Lead"]
+      "role": "Backend and mobile developer in a two-person team",
+      "periodStart": "2021-12",
+      "periodEnd": "2022-02",
+      "results": [
+        "Recognized as the best innovation in corporate sports in Russia, 2022.",
+        "Named best online project for employee sports engagement and best well-being assessment provider, 2022.",
+        "Held application stability while working with large corporate customers."
+      ],
+      "tags": [
+        "React Native",
+        "Node.js",
+        "GraphQL",
+        "MongoDB",
+        "Redis",
+        "Datadog",
+        "Amplitude",
+        "DevOps",
+        "Tech Lead"
+      ]
     },
     {
       "name": "Bigam",
       "description": "A hardware-store chain retail app: catalog, filters, delivery, in-app and on-delivery payment, personalized pricing, and 1C integrations, shipped to store.",
       "url": "https://www.bigam.ru/",
-      "tags": ["React Native", "Node.js", "1C", "API", "DevOps"]
+      "role": "Mobile architect and backend developer",
+      "periodStart": "2021-10",
+      "periodEnd": "2024-04",
+      "results": [
+        "Developed the application and kept improving it after release.",
+        "Reached more than 100,000 downloads with a 5.0 store rating.",
+        "Supported the advertising campaign that grew user engagement."
+      ],
+      "tags": ["React Native", "Node.js", "TypeScript", "1C", "API", "DevOps"]
+    },
+    {
+      "name": "Bismap",
+      "description": "A B2B tenders app: business registration, applications, and the full backend, then handed to the client to run.",
+      "url": "https://bismap.net/",
+      "role": "Sole developer owning architecture, the mobile app, and the backend",
+      "periodStart": "2021-02",
+      "periodEnd": "2021-04",
+      "results": [
+        "Developed and launched the application for a global audience.",
+        "Handed the project over fully configured, so the customer runs it without a development team."
+      ],
+      "tags": ["Node.js", "Nest.js", "React Native", "TypeScript", "MongoDB", "B2B", "Backend"]
+    },
+    {
+      "name": "Small",
+      "description": "A cashier-free shopping app: barcode scanning in the store and in-app payment by bank card, Google Pay, or Apple Pay.",
+      "url": "https://apps.apple.com/ru/app/small/id1535215720",
+      "role": "UI and payment integration developer in a two-person team",
+      "periodStart": "2020-06",
+      "periodEnd": null,
+      "results": [
+        "Developed the application and handed it over to the customer under agreement.",
+        "The product was later discontinued after stores introduced legal restrictions."
+      ],
+      "tags": ["React Native", "React", "TypeScript", "Redux"]
+    },
+    {
+      "name": "GroupQ",
+      "description": "A gas-station loyalty app: fuel bonuses, promotions and prices, routing to stations, and feedback.",
+      "url": "https://groupq-ural.ru/",
+      "role": "Mobile architect and Node.js backend developer",
+      "periodStart": "2019-09",
+      "periodEnd": "2025-04",
+      "results": [
+        "Developed the application and kept improving it after release.",
+        "Grew user engagement to more than 10,000 downloads across app stores."
+      ],
+      "tags": ["React Native", "TypeScript", "Node.js", "Redux", "Express", "Redis"]
+    },
+    {
+      "name": "Gazprombank Hackathon",
+      "description": "A product built for Gazprombank in a 48-hour team hackathon at the Russian programming championship.",
+      "url": "https://hacks-ai.ru/",
+      "role": "Frontend and backend developer on a 48-hour hackathon team",
+      "periodStart": null,
+      "periodEnd": null,
+      "results": ["Placed 11th in the Programming Championship of Russia, 2022."],
+      "tags": ["Hackathon", "Frontend Development", "Backend Development", "Team Building"]
     }
   ]
 }
