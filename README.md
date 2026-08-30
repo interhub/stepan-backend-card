@@ -7,6 +7,8 @@ skills, work experience, projects and links.
 
 **Live Apollo Sandbox:** https://stepan-backend-card.vercel.app
 
+**Code rules:** [`rules/`](rules/README.md) - TypeScript style, project structure, layer and data access contracts.
+
 ---
 
 ## Run locally
